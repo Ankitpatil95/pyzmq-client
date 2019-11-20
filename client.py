@@ -1,8 +1,15 @@
+"""
+This module will connect to the server and display the broadcast message.
+"""
 import os
 import zmq
 
 
 def connect_server():
+    """
+    This function will connect to the server
+    :return:
+    """
     context = zmq.Context()
     print("Connecting to server...")
     socket = context.socket(zmq.SUB)
