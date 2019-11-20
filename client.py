@@ -4,10 +4,12 @@ import zmq
 
 def connect_server():
     context = zmq.Context()
-    print("Connecting to server…")
+    print("Connecting to server...")
     socket = context.socket(zmq.SUB)
     socket.setsockopt(zmq.SUBSCRIBE, b"")
     socket.connect(os.environ['server_url'])
+    print("Connected to server")
+    print("Listening to server...")
 
     while True:
         message = socket.recv()
