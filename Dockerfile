@@ -1,10 +1,13 @@
 FROM python:3-slim
 
-ADD client.py /
+COPY . /
 
-ENV server_url="tcp://10.0.28.221:5555"
+ENV server_url="tcp://10.0.28.216:5555"
+ENV FLASK_APP="client.py"
 
-RUN pip install pyzmq
+# install dependencies
+RUN pip install -r requirements.txt --no-cache-dir
 
-CMD [ "python", "./client.py" ]
+
+CMD [ "flask", "run" ]
 
