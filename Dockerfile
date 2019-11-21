@@ -8,6 +8,5 @@ ENV FLASK_APP="client.py"
 # install dependencies
 RUN pip install -r requirements.txt --no-cache-dir
 
-
 CMD [ "flask", "run" ]
 
