@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div>
+    User Login:
+    <a href="/index">Home</a>
+    {% if current_user.is_authenticated %}
+    <a href="/logout">Logout</a>
+    {% else %}
+    <a href="/login">Login</a>
+    {% endif %}
+</div>
+    <h1>Hi, {{ username }}!</h1>
+    <!-- {% for post in posts %}
+    <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+    {% endfor %} -->
+
+{% if username %}
+    <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+    <div class="message_holder"></div>
+
+    <form action="" method="POST">
+      <!-- <input type="text" class="username" placeholder="User Name"/> -->
+      <input type="text" class="message" id="typing-message" placeholder="Messages"/>
+      <input type="submit"/>
+    </form>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script> -->
+    <script type="text/javascript">
+    	sessionStorage.setItem('token','{{token}}' );
+    	console.log(sessionStorage.getItem("token"));
+      
+    </script>
+{% endif %}
+</body>
+</html>
+
