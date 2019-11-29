@@ -14,9 +14,8 @@ context = zmq.Context()
 socket = context.socket(zmq.SUB)
 
 API_URL = os.environ['api_url']
-# API_URL = "http://10.0.28.221:5000"
 SERVER_URL = os.environ["server_url"]
-# SERVER_URL = 'tcp://10:0:28:221:5555'
+
 
 
 
