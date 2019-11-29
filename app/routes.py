@@ -1,3 +1,4 @@
+import os
 import zmq
 from flask import render_template,Flask,flash, request, redirect,url_for, json, session,jsonify,abort
 from app import app
@@ -27,7 +28,7 @@ def login_required(f):
 @app.route('/')
 def index():
     socket.setsockopt(zmq.SUBSCRIBE, b"")
-    socket.connect('tcp://localhost:5555')
+    socket.connect(os.environ["server_url"])
     user = {'username': current_user.username if current_user.is_authenticated else ''}
     return render_template('index.html', title='Home', user=user,)
 
