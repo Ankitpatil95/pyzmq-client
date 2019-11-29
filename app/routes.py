@@ -1,10 +1,9 @@
 import zmq
 from flask import render_template,Flask,flash, request, redirect,url_for, json, session,jsonify,abort
-from app import app,db
+from app import app
 from app.forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user,logout_user
 from app.models import User
-from flask_socketio import SocketIO
 import subprocess
 import requests
 from functools import wraps
@@ -12,7 +11,7 @@ from functools import wraps
 
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
-socketio = SocketIO(app)
+# socketio = SocketIO(app)
 
 def login_required(f):
     @wraps(f)
@@ -58,12 +57,7 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegistrationForm()
-    if form.validate_on_submit():
-        # user = User(username=form.username.data, email=form.email.data)
-        # user.set_password(form.password.data)
-        # db.session.add(user)
-        # db.session.commit()
-        
+    if form.validate_on_submit():        
         res = requests.post('http://10.0.28.221:5000/register', json={"username":form.username.data,"password":form.password.data,"email":form.email.data})
         if res.ok:
             flash('Congratulations, you are now a registered user!')
@@ -73,10 +67,10 @@ def register():
 
 
 @app.route('/message')
-@login_required
+# @login_required
 def message():
     message = socket.recv()
-
+    print ("yes its executing")
     response = app.response_class(
         response=json.dumps({'message': message.decode("utf-8")}),
         status=200,

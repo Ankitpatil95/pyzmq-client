@@ -1,3 +1,7 @@
 pyzmq==18.1.1
 Flask==1.1.1
 requests
+Flask-SQLAlchemy
+Flask-Migrate==2.5.2
+Flask-Login==0.4.1
+Flask-WTF==0.14.2
