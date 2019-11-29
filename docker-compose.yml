@@ -1,0 +1,11 @@
+version: '2'
+services:
+  client:
+    build: .
+    environment:
+      server_url: tcp://10:0:28:216:5555
+    command: python /code/user-reg.py
+    ports:
+    - "5001:5000"
+    volumes:
+    - .:/code
