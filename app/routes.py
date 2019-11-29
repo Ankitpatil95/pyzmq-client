@@ -12,7 +12,14 @@ from functools import wraps
 
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
-# socketio = SocketIO(app)
+
+API_URL = os.environ['api_url']
+# API_URL = "http://10.0.28.221:5000"
+SERVER_URL = os.environ["server_url"]
+# SERVER_URL = 'tcp://10:0:28:221:5555'
+
+
+
 
 def login_required(f):
     @wraps(f)
@@ -27,10 +34,7 @@ def login_required(f):
 
 @app.route('/')
 def index():
-    socket.setsockopt(zmq.SUBSCRIBE, b"")
-    socket.connect(os.environ["server_url"])
-    user = {'username': current_user.username if current_user.is_authenticated else ''}
-    return render_template('index.html', title='Home', user=user,)
+    return render_template('index.html', title='Home')
 
 
 
@@ -40,10 +44,13 @@ def login():
         return redirect(url_for('index'))
     form = LoginForm()
     if request.method == 'POST':
-        res = requests.post('http://10.0.28.221:5000/auth', json={"username":form.username.data,"password":form.password.data})
+        
+        # res = requests.post('http://10:0:28:221:5000/auth', json={"username":form.username.data,"password":form.password.data})
+        res = requests.post('{}/auth'.format(API_URL), json={"username":form.username.data,"password":form.password.data})
         if res.ok:
-            flash('Congratulations, you are now logged in!')
-            return render_template('index.html', title='Home',username=form.username.data, token=res.json().get('access_token'),)
+            socket.setsockopt(zmq.SUBSCRIBE, b"")
+            socket.connect(SERVER_URL)
+            return render_template('index.html', title='Home', token=res.json().get('access_token'),server_url=SERVER_URL, user=form.username.data)
 
     return render_template('login.html', title='Sign In', form=form)
 
@@ -59,7 +66,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():        
-        res = requests.post('http://10.0.28.221:5000/register', json={"username":form.username.data,"password":form.password.data,"email":form.email.data})
+        res = requests.post('{}/register'.format(API_URL), json={"username":form.username.data,"password":form.password.data,"email":form.email.data})
         if res.ok:
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('login'))

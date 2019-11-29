@@ -32,14 +32,15 @@
 <div>
     User Login:
     <a href="/index">Home</a>
-    {% if current_user.is_authenticated %}
+    {% if user %}
     <a href="/logout">Logout</a>
     {% else %}
     <a href="/login">Login</a>
     {% endif %}
 </div>
-    <h1>Hi, {{ username }}!</h1>
-    <h2 class="loading">Listening to server</h2>
+    <h1>Hi, {{ user }}!</h1>
+    {% if user %}
+    <h2 class="loading">Listening to {{server_url}}</h2>
   
     
 <div id="message"></div>
@@ -54,7 +55,7 @@ setInterval(function(){
     	}, dataType: "json"});
 }, 3000);
 </script>
-
+{% endif %}
 
 </body>
 </html>

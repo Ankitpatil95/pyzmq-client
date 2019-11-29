@@ -3,10 +3,11 @@ services:
   client:
     build: .
     environment:
-      server_url: tcp://10:0:28:216:5555
-      api_url: http://10:0:28:216:5000
+      server_url: tcp://localhost:5555
+      api_url: http://10.0.28.221:5000
     command: python /code/user-reg.py
     ports:
     - "5001:5000"
+    network_mode: host
     volumes:
     - .:/code
