@@ -1,6 +1,6 @@
 wtforms
 pyzmq==18.1.1
-Flask==1.1.1
+Flask==2.3.2
 requests
 Flask-SQLAlchemy
 Flask-Migrate==2.5.2
